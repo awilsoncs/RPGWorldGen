@@ -2,7 +2,7 @@
 
 class StatGenBase(object):
     """
-    Rreturns a dictionary mapping ability scores to
+    Returns a dictionary mapping ability scores to
     values drawn from _roll_stat()
     """
 

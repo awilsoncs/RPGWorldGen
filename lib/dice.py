@@ -6,10 +6,12 @@ Library for simulating dice throws.
 
 import random
 
+
 def roll_die(faces=6):
     """Simulates the roll of a die with a given number of faces."""
 
     return random.randrange(1, faces + 1)
+
 
 def roll(exp, sorted=False):
     """Simulates the roll of some dices expressed with the dice notation."""
@@ -28,16 +30,19 @@ def roll(exp, sorted=False):
 
     return rolls
 
+
 def discard(rolls, count):
     if count > len(rolls):
         raise ValueError("Can't discard more dice than there are in a throw")
     return rolls[count:]
+
 
 def sum_roll(exp):
     """Returns the sumf of a roll of some dices expressed with the dice
     notation."""
 
     return sum(roll(exp))
+
 
 def percentile_roll(exp):
     """Returns the result of rolling two dices expressed with the dice notation,
