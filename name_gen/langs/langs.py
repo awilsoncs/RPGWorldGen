@@ -19,18 +19,19 @@ class Language:
         self.clean_doubles = clean_doubles
         self.name_suffix = name_suffix
         self.syllables = []
-        self._build_syllables
+        self._build_syllables()
 
     def _build_syllables(self):
         def build_syllable():
             pattern = self.constraint
             output = ""
             for match in re.finditer('\((.+?)\)', pattern):
+                #matches one or more optional predefined characters
                 if re.match('([a-z]+)\?', match.group(1)):
                     possible = choice(re.match('([a-z]+)\?', match.group(1)).group(1))
                     output += choice([possible, ""])
                 elif re.match('([a-z]+)', match.group(1)):
-                    output += choice(re.match('([a-z]+)\?', match.group(1)).group(1))
+                    output += choice(re.match('([a-z]+)', match.group(1)).group(1))
                 elif match.group(1) == "C":
                     output += self._random_consonant()
                 elif match.group(1) == "V":
