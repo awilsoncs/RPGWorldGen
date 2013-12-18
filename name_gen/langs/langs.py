@@ -1,4 +1,5 @@
 from random import *
+import re
 
 
 class Language:
@@ -18,23 +19,30 @@ class Language:
         self.clean_doubles = clean_doubles
         self.name_suffix = name_suffix
         self.syllables = []
-        self._stock_syllables()
+        self._build_syllables
 
-    # TODO Replace this method with regex method
-    def _stock_syllables(self):
-        for x in range(0, self.phoneme_count):
+    def _build_syllables(self):
+        def build_syllable():
             pattern = self.constraint
-            while "(C)" in pattern:
-                pattern = pattern.replace("(C)", self._random_consonant(), 1)
-            while "(V)" in pattern:
-                pattern = pattern.replace("(V)", self._random_vowel(), 1)
-            while "(C?)" in pattern:
-                new_letter = choice([self._random_consonant(), ""])
-                pattern = pattern.replace("(C?)", new_letter, 1)
-            while "(V?)" in pattern:
-                new_letter = choice([self._random_vowel(), ""])
-                pattern = pattern.replace("(V?)", new_letter, 1)
-            self.syllables.append(pattern)
+            output = ""
+            for match in re.finditer('\((.+?)\)', pattern):
+                if re.match('([a-z]+)\?', match.group(1)):
+                    possible = choice(re.match('([a-z]+)\?', match.group(1)).group(1))
+                    output += choice([possible, ""])
+                elif re.match('([a-z]+)', match.group(1)):
+                    output += choice(re.match('([a-z]+)\?', match.group(1)).group(1))
+                elif match.group(1) == "C":
+                    output += self._random_consonant()
+                elif match.group(1) == "V":
+                    output += self._random_vowel()
+                elif match.group(1) == "C?":
+                    output += choice([self._random_consonant(), ""])
+                elif match.group(1) == "V?":
+                    output += choice([self._random_vowel(), ""])
+            return output
+        for _ in range(0, self.phoneme_count):
+            syllable = build_syllable()
+            self.syllables.append(syllable)
 
     def _random_vowel(self):
         return self.vowels[int(betavariate(1, 3) * len(self.vowels))]

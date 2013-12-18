@@ -5,12 +5,13 @@ Required parameters-
         more often.
     consonants: As vowels, but should be a list of consonants.
     constraint: This pattern is used to build syllables.
-        (C) - consonant
-        (V) - vowel
-        (_?) - optional, 50% chance of occurring
+        (C) - random consonant
+        (V) - random vowel
+        (abc...) - one or more lowercase letters may be selected. Ex: (avcsi), (kenqp).
+        (_?) - optional, 50% chance of occurring. Can be appended to any other token.
         Examples:
-            Rough Japanese: (C?)(V)(V?)
-            Very Rough English: (C?)(C?)(V?)(V)(C?)(C?)(C?)
+            Rough Japanese: (C?)(V)(V?)(n?)
+            Very Rough English: (s?)(C?)(rlwy?)(V?)(V)(C?)(C?)(C?)
             (Note: these are just meant to display how to write the patterns. Langs isn't sophisticated enough yet to
             generate real-looking Japanese or English.)
 

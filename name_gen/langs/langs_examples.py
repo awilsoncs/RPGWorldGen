@@ -2,7 +2,7 @@ from name_gen.langs.langs import *
 
 dwarvish = Language("aouie",
                     "rbldmfhjngtkvs",
-                    "(C)(V)(C)",
+                    "(C)(V)(V?)(C)",
                     name_suffix="io")
 
 # Elves prefer longer words, some punctuation
