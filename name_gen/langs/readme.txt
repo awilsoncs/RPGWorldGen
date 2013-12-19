@@ -1,8 +1,8 @@
 Language Construction:
 
 Required parameters-
-    vowels: List or string of vowels that appear in the language. Vowels that appear near the front appear exponentially
-        more often.
+    vowels: List, string, or unicode of vowels that appear in the language. Vowels that appear near the front appear
+        exponentially more often.
     consonants: As vowels, but should be a list of consonants.
     constraint: This pattern is used to build syllables.
         (C) - random consonant
@@ -22,5 +22,3 @@ Options parameters-
     punct_rarity: How often punctuation occurs within words. No effect is punctuation list is empty.
     clean_doubles: By default, most double vowels are removed from words. Some can still occur.
     name_suffix: By default, no languages have common suffixes for names. If yours should, list them here.
-
-Other-

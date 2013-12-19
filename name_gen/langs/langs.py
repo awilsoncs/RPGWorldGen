@@ -1,3 +1,4 @@
+# coding=utf-8
 from random import *
 import re
 
@@ -5,7 +6,16 @@ import re
 class Language:
 
     def __init__(self):
-        pass
+        self.consonants = None
+        self.constraint = None
+        self.name_suffix = None
+        self.phoneme_count = None
+        self.syllables = None
+        self.vowels = None
+        self.word_length = None
+        self.punctuation = None
+        self.punctuation_rarity = None
+        self.clean_doubles = None
 
     def build_syllables(self):
         def build_syllable():
@@ -65,13 +75,13 @@ class Language:
         Provides a string, consisting of a single word in the random language.
         """
         output = []
-        wordlen = int(expovariate(2) * self.word_length) + 1
-        for x in range(wordlen):
+        word_length = int(expovariate(2) * self.word_length) + 1
+        for x in range(word_length):
             output.append(choice(self.syllables))
             #Insert Punctuation
-        if wordlen > 1 and len(self.punctuation) > 0:
+        if word_length > 1 and len(self.punctuation) > 0:
             if randint(1, self.punctuation_rarity) is self.punctuation_rarity:
-                punct = randint(1, wordlen - 1)
+                punct = randint(1, word_length - 1)
                 output.insert(punct, choice(self.punctuation))
         output = ''.join(output)
         #Clean out ugly doubles by default.

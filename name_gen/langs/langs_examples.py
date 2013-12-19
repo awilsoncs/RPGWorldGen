@@ -1,3 +1,4 @@
+# coding=utf-8
 from name_gen.langs.langs import *
 
 dwarvish = lang("aouie",
@@ -6,7 +7,7 @@ dwarvish = lang("aouie",
                 name_suffix="io")
 
 # Elves prefer longer words, some punctuation
-elvish = lang("aiueo",
+elvish = lang(u"iueaóëáéôîûú",
               "lncrshtbdz",
               "(C?)(V)(C)",
               word_length=3,
@@ -16,7 +17,7 @@ elvish = lang("aiueo",
 
 # Goblins like ugly doubles and have fewer syllables.
 # This language displays how to use sounds that take multiple letters in english.
-goblin = lang("ouae",
+goblin = lang(u"ouae",
               ["b", "r", "g", "ch", "m",
                "t", "z", "l", "k", "h", "s"],
               "(C)(V)(V?)(C)",
