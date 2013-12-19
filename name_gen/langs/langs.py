@@ -4,24 +4,10 @@ import re
 
 class Language:
 
-    def __init__(self, vowels,
-                 consonants, constraint,
-                 phoneme_count=50, punctuation="",
-                 word_length=1.5, punctuation_rarity=10,
-                 clean_doubles=True, name_suffix=""):
-        self.vowels = vowels
-        self.consonants = consonants
-        self.constraint = constraint
-        self.phoneme_count = phoneme_count
-        self.punctuation = punctuation
-        self.word_length = word_length
-        self.punctuation_rarity = punctuation_rarity
-        self.clean_doubles = clean_doubles
-        self.name_suffix = name_suffix
-        self.syllables = []
-        self._build_syllables()
+    def __init__(self):
+        pass
 
-    def _build_syllables(self):
+    def build_syllables(self):
         def build_syllable():
             pattern = self.constraint
             output = ""
@@ -109,3 +95,20 @@ def lang_from_file(syllables):
     Takes a text file of language syllables and returns a language based on it.
     """
     pass
+
+
+def lang(vowels, consonants, constraint, phoneme_count=50, punctuation="", word_length=1.5, punctuation_rarity=10,
+         clean_doubles=True, name_suffix=""):
+    new_lang = Language()
+    new_lang.vowels = vowels
+    new_lang.consonants = consonants
+    new_lang.constraint = constraint
+    new_lang.phoneme_count = phoneme_count
+    new_lang.punctuation = punctuation
+    new_lang.word_length = word_length
+    new_lang.punctuation_rarity = punctuation_rarity
+    new_lang.clean_doubles = clean_doubles
+    new_lang.name_suffix = name_suffix
+    new_lang.syllables = []
+    new_lang.build_syllables()
+    return new_lang

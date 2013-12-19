@@ -1,27 +1,27 @@
 from name_gen.langs.langs import *
 
-dwarvish = Language("aouie",
-                    "rbldmfhjngtkvs",
-                    "(C)(V)(V?)(C)",
-                    name_suffix="io")
+dwarvish = lang("aouie",
+                "rbldmfhjngtkvs",
+                "(C)(V)(V?)(C)",
+                name_suffix="io")
 
 # Elves prefer longer words, some punctuation
-elvish = Language("aiueo",
-                  "lncrshtbdz",
-                  "(C?)(V)(C)",
-                  word_length=3,
-                  punctuation="'",
-                  name_suffix=["i", "ia", "ue"],
-                  punctuation_rarity=2)
+elvish = lang("aiueo",
+              "lncrshtbdz",
+              "(C?)(V)(C)",
+              word_length=3,
+              punctuation="'",
+              name_suffix=["i", "ia", "ue"],
+              punctuation_rarity=2)
 
 # Goblins like ugly doubles and have fewer syllables.
 # This language displays how to use sounds that take multiple letters in english.
-goblin = Language("ouae",
-                  ["b", "r", "g", "ch", "m",
-                   "t", "z", "l", "k", "h", "s"],
-                  "(C)(V)(V?)(C)",
-                  clean_doubles=False,
-                  phoneme_count=20)
+goblin = lang("ouae",
+              ["b", "r", "g", "ch", "m",
+               "t", "z", "l", "k", "h", "s"],
+              "(C)(V)(V?)(C)",
+              clean_doubles=False,
+              phoneme_count=20)
 
 print "\nDwarvish Names\n"
 for _ in range(5):
