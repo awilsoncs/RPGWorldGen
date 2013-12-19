@@ -5,17 +5,38 @@ import re
 
 class Language:
 
-    def __init__(self, vowels, consonants, constraint, phoneme_count=50, punctuation="", word_length=1.5,
-                 punctuation_rarity=10, clean_doubles=True, name_suffix=""):
+    def __init__(self, vowels, consonants, constraint, **kwargs):
+        if "phoneme_count" in kwargs:
+            self.phoneme_count = kwargs["phoneme_count"]
+        else:
+            self.phoneme_count = 50
+        if "punctuation" in kwargs:
+            self.punctuation = kwargs["punctuation"]
+        else:
+            self.punctuation = ""
+        if "word_length" in kwargs:
+            self.word_length = kwargs["word_length"]
+        else:
+            self.word_length = 1.5
+        if "punctuation_rarity" in kwargs:
+            self.punctuation_rarity = kwargs["punctuation_rarity"]
+        else:
+            self.punctuation_rarity = 10
+        if "clean_doubles" in kwargs:
+            self.clean_doubles = kwargs["clean_doubles"]
+        else:
+            self.clean_doubles = True
+        if "name_suffix" in kwargs:
+            self.name_suffix = kwargs["name_suffix"]
+        else:
+            self.name_suffix = ""
+        if "name_patterns" in kwargs:
+            self.name_patterns = kwargs["name_patterns"]
+        else:
+            self.name_patterns = ["{U} {U}{w}"]
         self.vowels = vowels
         self.consonants = consonants
         self.constraint = constraint
-        self.phoneme_count = phoneme_count
-        self.punctuation = punctuation
-        self.word_length = word_length
-        self.punctuation_rarity = punctuation_rarity
-        self.clean_doubles = clean_doubles
-        self.name_suffix = name_suffix
         self.syllables = []
         self._build_syllables()
 
@@ -97,7 +118,25 @@ class Language:
             output = self.word()
         if len(self.name_suffix) > 0 and randint(0, 1) is 0:
             output += choice(self.name_suffix)
-        return output.capitalize()
+        return output
+
+    def pattern_name(self):
+        """
+        Returns a name, stylized with an arbitrary pattern, where
+        {U} gives a capital syllable and {} gives a lower case syllable.
+        {w} gives a standard word.
+        """
+        pattern = choice(self.name_patterns)
+        for symbol in ["{U}", "{}", "{w}"]:
+            while symbol in pattern:
+                if symbol == "{U}":
+                    new_syllable = self.name().capitalize()
+                elif symbol == "{w}":
+                    new_syllable = self.word()
+                else:
+                    new_syllable = self.name()
+                pattern = pattern.replace(symbol, new_syllable, 1)
+        return pattern
 
 
 # TODO
