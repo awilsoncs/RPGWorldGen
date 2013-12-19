@@ -1,7 +1,7 @@
 # coding=utf-8
 from name_gen.langs.langs import *
 
-dwarvish = Language("aouie",
+dwarvish = Language(u"aouiôeá",
                     "rbldmfhjngtkvs",
                     "(C)(V)(V?)(C)",
                     name_suffix="io",
@@ -14,7 +14,7 @@ elvish = Language(u"iueaóëáéôîûú",
                   "(C?)(V)(C)",
                   word_length=3,
                   punctuation="'",
-                  name_suffix=["i", "ia", "ue"],
+                  name_suffix=["i", "ia", "ue", "as"],
                   punctuation_rarity=2,
                   name_patterns=["{U} {U}{w}", "{U} of {U}{}", "{U} of House {U}", "{U}, son of {U}",
                                  "{U}, daughter of {U}", "{U} of the {U}{}"])
@@ -26,7 +26,8 @@ goblin = Language("ouae",
                    "t", "z", "l", "k", "h", "s"],
                   "(C)(V)(V?)(C)",
                   clean_doubles=False,
-                  phoneme_count=20)
+                  phoneme_count=20,
+                  name_patterns=["{U}"])
 
 print "\nDwarvish Names\n"
 for _ in range(5):
