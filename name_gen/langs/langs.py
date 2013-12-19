@@ -147,10 +147,23 @@ def lang_from_file(syllables):
     pass
 
 # Predefined languages
+# The human language is designed to sound fairly familiar, as if it might be
+# an undiscovered germanic cousin.
+human = Language("eaoiuy",
+                 "tnshrdlcmwfgypbvkjxqz",
+                 "(C?)(rlwy?)(V?)(V)(C?)(C?)",
+                 name_suffix=["wyn", "mer", "son", "ron", "iam"],
+                 word_length=1,
+                 name_patterns= ["{U}", "{U} of {U}", "{U} of House {U}", "{U}, son of {U}",
+                                   "{U}a, daughter of {U}", "{U}i, daughter of {U}",
+                                   "{U} of the {U}", "{U}ol, son of {U}",
+                                   "{U} {U}son", "{U} of {U}ton"])
+
 dwarvish = Language(u"aouiôeá",
                     "rbldmfhjngtkvs",
                     "(C)(V)(V?)(C)",
                     name_suffix="io",
+                    punctuation="-",
                     name_patterns=["{U} {U}{w}", "{U} of {U}{}", "{U} of House {U}", "{U}, son of {U}",
                                    "{U}, daughter of {U}", "{U} of the {U}{}"])
 
@@ -175,3 +188,12 @@ goblin = Language("ouae",
                   clean_doubles=False,
                   phoneme_count=20,
                   name_patterns=["{U}"])
+
+orcish = Language(u"aoâue",
+                  ["k", "r", "j", "ch", "m",
+                   "t", "z", "l", "p", "b", "h", "s"],
+                  "(C)(V?)(V?)(C)",
+                  word_length=1.2,
+                  phoneme_count=30,
+                  name_patterns=["{U}{}", "{U}{} of Clan {U}{w}", "{U}{}, slayer of {U}{}", "{U}",
+                                 "{U}-{}", "{U}-{} of Clan {U}{w}", "{U}-{}, slayer of {U}{}"])
