@@ -4,7 +4,6 @@ import re
 
 
 class Language:
-
     def __init__(self, vowels, consonants, constraint, **kwargs):
         if "phoneme_count" in kwargs:
             self.phoneme_count = kwargs["phoneme_count"]
@@ -59,6 +58,7 @@ class Language:
                 elif match.group(1) == "V?":
                     output += choice([self._random_vowel(), ""])
             return output
+
         for _ in range(0, self.phoneme_count):
             syllable = build_syllable()
             self.syllables.append(syllable)
@@ -112,6 +112,13 @@ class Language:
                 output = output.replace(double, double[0])
         return output
 
+    # TODO Needs a function to clean out repetitive patterns.
+    def clean_repetitions(self, string):
+        """
+        Takes a generated language string and cleans out any words that appear twice in a row.
+        """
+        pass
+
     def name(self):
         output = ""
         while len(output) < 3 or len(output) > 10:
@@ -127,12 +134,14 @@ class Language:
         {w} gives a standard word.
         """
         pattern = choice(self.name_patterns)
-        for symbol in ["{U}", "{}", "{w}"]:
+        for symbol in ["{U}", "{}", "{w}", "{W}"]:
             while symbol in pattern:
                 if symbol == "{U}":
                     new_syllable = self.name().capitalize()
                 elif symbol == "{w}":
                     new_syllable = self.word()
+                elif symbol == "{W}":
+                    new_syllable = self.word().capitalize()
                 else:
                     new_syllable = self.name()
                 pattern = pattern.replace(symbol, new_syllable, 1)
@@ -149,15 +158,15 @@ def lang_from_file(syllables):
 # Predefined languages
 # The human language is designed to sound fairly familiar, as if it might be
 # an undiscovered germanic cousin.
-human = Language("eaoiuy",
+human = Language(u"eaoiuy",
                  "tnshrdlcmwfgypbvkjxqz",
                  "(C?)(rlwy?)(V?)(V)(C?)(C?)",
                  name_suffix=["wyn", "mer", "son", "ron", "iam"],
                  word_length=1,
-                 name_patterns= ["{U}", "{U} of {U}", "{U} of House {U}", "{U}, son of {U}",
-                                   "{U}a, daughter of {U}", "{U}i, daughter of {U}",
-                                   "{U} of the {U}", "{U}ol, son of {U}",
-                                   "{U} {U}son", "{U} of {U}ton"])
+                 name_patterns=["{U}", "{U} of {U}", "{U} of House {U}", "{U}, son of {U}",
+                                "{U}a, daughter of {U}", "{U}i, daughter of {U}",
+                                "{U} of the {U}", "{U}ol, son of {U}",
+                                "{U} {U}son", "{U} of {U}ton"])
 
 dwarvish = Language(u"aouiôeá",
                     "rbldmfhjngtkvs",
@@ -168,25 +177,35 @@ dwarvish = Language(u"aouiôeá",
                                    "{U}, daughter of {U}", "{U} of the {U}{}"])
 
 # Elves prefer longer words, some punctuation
-elvish = Language(u"iueaóëáéôîûú",
-                  "lncrshtbdz",
+elvish = Language(["a", "i", "e", "o", "u", "ai", "ae", u"ê", "ui", "au", u"í", u"â", u"ú", "ue", u"ô", "y", u"ý"],
+                  ["n", "r", "l", "h", "t", "d", "m", "ch", "v", "ll", "g", "s", "c", "p", "f", "b", "w"],
                   "(C?)(V)(C)",
-                  word_length=2.7,
-                  punctuation="'",
-                  name_suffix=["i", "ia", "ue", "as"],
+                  word_length=2,
+                  punctuation="'-",
+                  phoneme_count=150,
+                  name_suffix=["el", "iss", "lon", "iel", "ra", "al"],
                   punctuation_rarity=2,
-                  name_patterns=["{U} {U}{w}", "{U} of {U}{}", "{U} of House {U}", "{U}, son of {U}",
-                                 "{U}, daughter of {U}", "{U} of the {U}{}"])
+                  name_patterns=["{W}{}"])
+
+old_elvish = Language(["a", "i", "e", u"ë", "u", "o", "y", u"á", u"í", u"ó", u"ú", u"é"],
+                      ["n", "r", "l", "m", "t", "v", "s", "d", "c", "h", "p", "b", "f", "w", "q"],
+                      "(C?)(V)(C)",
+                      word_length=2.25,
+                      punctuation="'-",
+                      phoneme_count=150,
+                      name_suffix=["el", "iss", "lon", "iel", "ra", "al"],
+                      punctuation_rarity=2,
+                      name_patterns=["{W}{}"])
 
 # Goblins like ugly doubles and have fewer syllables.
 # This language displays how to use sounds that take multiple letters in english.
-goblin = Language("ouae",
+goblin = Language("ouaei",
                   ["b", "r", "g", "ch", "m",
                    "t", "z", "l", "k", "h", "s"],
                   "(C)(V)(V?)(C)",
                   word_length=1,
                   clean_doubles=False,
-                  phoneme_count=20,
+                  phoneme_count=30,
                   name_patterns=["{U}"])
 
 orcish = Language(u"aoâue",
@@ -194,6 +213,6 @@ orcish = Language(u"aoâue",
                    "t", "z", "l", "p", "b", "h", "s"],
                   "(C)(V?)(V?)(C)",
                   word_length=1.2,
-                  phoneme_count=30,
+                  phoneme_count=40,
                   name_patterns=["{U}{}", "{U}{} of Clan {U}{w}", "{U}{}, slayer of {U}{}", "{U}",
                                  "{U}-{}", "{U}-{} of Clan {U}{w}", "{U}-{}, slayer of {U}{}"])
