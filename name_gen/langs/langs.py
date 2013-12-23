@@ -37,6 +37,7 @@ class Language:
         self.consonants = consonants
         self.constraint = constraint
         self.syllables = []
+        self.dictionary = {}
         self._build_syllables()
 
     def _build_syllables(self):
@@ -112,7 +113,6 @@ class Language:
                 output = output.replace(double, double[0])
         return output
 
-    # TODO Needs a function to clean out repetitive patterns.
     def clean_repetitions(self, string):
         """
         Takes a generated language string and cleans out any words that appear twice in a row.
@@ -147,14 +147,6 @@ class Language:
                 pattern = pattern.replace(symbol, new_syllable, 1)
         return pattern
 
-
-# TODO
-def lang_from_file(syllables):
-    """
-    Takes a text file of language syllables and returns a language based on it.
-    """
-    pass
-
 # Predefined languages
 # The human language is designed to sound fairly familiar, as if it might be
 # an undiscovered germanic cousin.
@@ -183,9 +175,10 @@ elvish = Language(["a", "i", "e", "o", "u", "ai", "ae", u"ê", "ui", "au", u"í"
                   word_length=2,
                   punctuation="'-",
                   phoneme_count=150,
-                  name_suffix=["el", "iss", "lon", "iel", "ra", "al"],
+                  name_suffix=["a", "ia", "as", "el", "is", "lon", "iel", "ra", "al"],
                   punctuation_rarity=2,
-                  name_patterns=["{W}{}"])
+                  name_patterns=["{U} of {U}{}", "{U} of House {U}", "{U}, son of {U}",
+                                 "{U}, daughter of {U}", "{U} of the {U}{}"])
 
 old_elvish = Language(["a", "i", "e", u"ë", "u", "o", "y", u"á", u"í", u"ó", u"ú", u"é"],
                       ["n", "r", "l", "m", "t", "v", "s", "d", "c", "h", "p", "b", "f", "w", "q"],

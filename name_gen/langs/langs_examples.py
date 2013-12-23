@@ -2,8 +2,8 @@
 from name_gen.langs.langs import *
 
 print "\nElvish Names\n"
-for _ in range(10):
-    print old_elvish.pattern_name()
-print "\nElvish Samples\n"
-for _ in range(10):
-    print old_elvish.sample()
+for _ in range(3):
+    print elvish.pattern_name()
+print "\nElvish Words\n"
+for _ in range(3):
+    print elvish.sample()
