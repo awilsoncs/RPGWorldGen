@@ -24,7 +24,7 @@ class Generator:
             if key.group(1) in keys:
                 attr = key.group(1)
                 value = random.choice(keys[attr])
-                self.string = re.sub('@(\w*)', value, self.string, count=1)
+                self.string = re.sub('@%s' % (key.group(1)), value, self.string, count=1)
                 setattr(self, attr, value)
         self.keys = keys
         self.format_string = format_string
