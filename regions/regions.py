@@ -5,21 +5,26 @@ from lib.string_gen import Generator
 class Region(Generator):
 
     def __init__(self):
-        format_string = "Morality: @morality\n" \
-                        "Order: @order\n" \
-                        "Government: @government\n" \
+        format_string = "Alignment: @alignment\n" \
+                        "Government: @government_modifier @government\n" \
+                        "Government Agenda: @focus\n" \
                         "Foreign Policy: @foreign\n" \
-                        "Focus for Advancement: @focus\n" \
                         "Military Focus: @military\n" \
                         "\n--People--\n" \
-                        "Race: @race\n"
+                        "Race: @race\n" \
+                        "Skin Tone: @skin\n" \
+                        "Worship: deities of @domain and @domain\n" \
+                        "\n--Environment--\n" \
+                        "Dominant Biome: @biome\n"
 
-        keys = {"morality": ["evil to the core", "pretty bad", "not the nicest",
-                             "fairly average", "decent enough", "general good", "virtue incarnate"],
-                "order": ["complete chaos", "lawlessness", "low order", "balanced order", "organized", "lawful",
-                          "supreme justice"],
-                "government": ["monarchy", "democracy", "aristocracy", "meritocracy", "military rule", "theocracy",
-                               "republic"],
+        keys = {"alignment": ["lawful good", "neutral good", "chaotic good", "lawful neutral", "true neutral",
+                              "chaotic neutral", "lawful evil", "neutral evil", "chaotic evil"],
+                "government": ["monarchy", "democracy", "meritocracy", "theocracy", "confederation", "alliance",
+                               "republic", "dictatorship", "council", "plutocracy", "oligarchy"],
+                "government_modifier": ["sacred", "magocratic", "democratic", "oligarchic", "patriarchal",
+                                        "matriarchal", "bureaucratic", "technocratic", "aristocratic", "grand",
+                                        "fledgling", "hereditary", "imperial", "mercantile", "loose", "revolutionary",
+                                        "undead", "colonial", "anarchic", "military", "constitutional", "secret"],
                 "foreign": ["defensive", "aggressive", "seeks alliances", "seeks conquest",
                             "secluded", "cosmopolitan", "watchful", "heedless", "intrusive",
                             "respectful", "greedy", "generous", "dependent", "independent",
@@ -30,5 +35,15 @@ class Region(Generator):
                 "military": ["land armies", "navy/marine", "magic/divine", "military tech", "spies and special forces",
                              "heavy defenses", "support and resources", "animals and creatures",
                              "mercenaries and contractors", "mass disposable forces"],
-                "race": ["human"]}
+                "race": ["human"],
+                "skin": ["light, pale white", "white, fair", "medium, white to olive", "olive, moderate brown",
+                         "brown, dark brown", "Black, very dark brown to black"],
+                "domain": ["air", "animals", "artifice", "chaos", "charm", "community", "darkness", "death",
+                           "destruction", "earth", "evil", "fire", "glory", "good", "healing", "knowledge", "law",
+                           "liberation", "luck", "madness", "magic", "nobility", "plants", "protection", "repose",
+                           "runes", "strength", "the sun", "travel", "trickery", "the void", "war", "water", "weather"],
+                "biome": ["pond or lake", "stream or river", "wetlands", "ocean", "coral reef",
+                          "estuary", "hot and dry desert", "semiarid desert", "coastal desert", "cold desert",
+                          "tropical forest", "temperate forest", "taiga", "arctic tundra", "alpine tundra",
+                          "savanna", "temperate grassland", "steppe"]}
         Generator.__init__(self, format_string, keys)

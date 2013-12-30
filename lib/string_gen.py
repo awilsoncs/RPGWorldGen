@@ -17,7 +17,6 @@ class Generator:
     """
 
     #@TODO- The Generator should attempt to replace keys until it cannot, allowing recursive generation.
-
     def __init__(self, format_string, keys):
         self.string = format_string
         for key in re.finditer('@(\w*)', self.string):

@@ -1,6 +1,7 @@
 # coding=utf-8
 from random import *
 import re
+#@TODO Language class should read from XML files.
 
 
 class Language:
@@ -32,12 +33,12 @@ class Language:
         if "name_patterns" in kwargs:
             self.name_patterns = kwargs["name_patterns"]
         else:
-            self.name_patterns = ["{U} {U}{w}"]
+            self.name_patterns = ["(U) (U)(w)"]
         self.vowels = vowels
         self.consonants = consonants
         self.constraint = constraint
         self.syllables = []
-        self.dictionary = {}
+        self.dictionary = ()
         self._build_syllables()
 
     def _build_syllables(self):
@@ -75,7 +76,7 @@ class Language:
 
     def sample(self):
         """
-        Provides a string of phrases in the random language.
+        Provide a string of phrases in the random language.
         """
         output = ""
         for x in range(5):
@@ -84,7 +85,7 @@ class Language:
 
     def phrase(self):
         """
-        Provides a string of words in the random language.
+        Provide a string of words in the random language.
         """
         output = ""
         output += self.word().capitalize()
@@ -95,7 +96,7 @@ class Language:
 
     def word(self):
         """
-        Provides a string, consisting of a single word in the random language.
+        Provide a string, consisting of a single word in the random language.
         """
         output = []
         word_length = int(expovariate(2) * self.word_length) + 1
@@ -113,9 +114,10 @@ class Language:
                 output = output.replace(double, double[0])
         return output
 
+    #TODO clean_repetitions needs implementation
     def clean_repetitions(self, string):
         """
-        Takes a generated language string and cleans out any words that appear twice in a row.
+        Take a generated language string and cleans out any words that appear twice in a row.
         """
         pass
 
@@ -129,18 +131,17 @@ class Language:
 
     def pattern_name(self):
         """
-        Returns a name, stylized with an arbitrary pattern, where
-        {U} gives a capital syllable and {} gives a lower case syllable.
-        {w} gives a standard word.
+        Return a name, stylized with an arbitrary pattern, where (U) gives a capital syllable and () gives a lower 
+        case syllable. (w) gives a standard word.
         """
         pattern = choice(self.name_patterns)
-        for symbol in ["{U}", "{}", "{w}", "{W}"]:
+        for symbol in ["(U)", "()", "(w)", "(w)"]:
             while symbol in pattern:
-                if symbol == "{U}":
+                if symbol == "(U)":
                     new_syllable = self.name().capitalize()
-                elif symbol == "{w}":
+                elif symbol == "(w)":
                     new_syllable = self.word()
-                elif symbol == "{W}":
+                elif symbol == "(w)":
                     new_syllable = self.word().capitalize()
                 else:
                     new_syllable = self.name()
@@ -148,25 +149,25 @@ class Language:
         return pattern
 
 # Predefined languages
-# The human language is designed to sound fairly familiar, as if it might be
+# The northern language is designed to sound fairly familiar, as if it might be
 # an undiscovered germanic cousin.
-human = Language(u"eaoiuy",
+northern = Language(u"eaoiuy",
                  "tnshrdlcmwfgypbvkjxqz",
                  "(C?)(rlwy?)(V?)(V)(C?)(C?)",
                  name_suffix=["wyn", "mer", "son", "ron", "iam"],
                  word_length=1,
-                 name_patterns=["{U}", "{U} of {U}", "{U} of House {U}", "{U}, son of {U}",
-                                "{U}a, daughter of {U}", "{U}i, daughter of {U}",
-                                "{U} of the {U}", "{U}ol, son of {U}",
-                                "{U} {U}son", "{U} of {U}ton"])
+                 name_patterns=["(U)", "(U) of (U)", "(U) of House (U)", "(U), son of (U)",
+                                "(U)a, daughter of (U)", "(U)i, daughter of (U)",
+                                "(U) of the (U)", "(U)ol, son of (U)",
+                                "(U) (U)son", "(U) of (U)ton"])
 
 dwarvish = Language(u"aouiôeá",
                     "rbldmfhjngtkvs",
                     "(C)(V)(V?)(C)",
                     name_suffix="io",
                     punctuation="-",
-                    name_patterns=["{U} {U}{w}", "{U} of {U}{}", "{U} of House {U}", "{U}, son of {U}",
-                                   "{U}, daughter of {U}", "{U} of the {U}{}"])
+                    name_patterns=["(U) (U)(w)", "(U) of (U)()", "(U) of House (U)", "(U), son of (U)",
+                                   "(U), daughter of (U)", "(U) of the (U)()"])
 
 # Elves prefer longer words, some punctuation
 elvish = Language(["a", "i", "e", "o", "u", "ai", "ae", u"ê", "ui", "au", u"í", u"â", u"ú", "ue", u"ô", "y", u"ý"],
@@ -177,8 +178,8 @@ elvish = Language(["a", "i", "e", "o", "u", "ai", "ae", u"ê", "ui", "au", u"í"
                   phoneme_count=150,
                   name_suffix=["a", "ia", "as", "el", "is", "lon", "iel", "ra", "al"],
                   punctuation_rarity=2,
-                  name_patterns=["{U} of {U}{}", "{U} of House {U}", "{U}, son of {U}",
-                                 "{U}, daughter of {U}", "{U} of the {U}{}"])
+                  name_patterns=["(U) of (U)()", "(U) of House (U)", "(U), son of (U)",
+                                 "(U), daughter of (U)", "(U) of the (U)()"])
 
 old_elvish = Language(["a", "i", "e", u"ë", "u", "o", "y", u"á", u"í", u"ó", u"ú", u"é"],
                       ["n", "r", "l", "m", "t", "v", "s", "d", "c", "h", "p", "b", "f", "w", "q"],
@@ -188,7 +189,7 @@ old_elvish = Language(["a", "i", "e", u"ë", "u", "o", "y", u"á", u"í", u"ó",
                       phoneme_count=150,
                       name_suffix=["el", "iss", "lon", "iel", "ra", "al"],
                       punctuation_rarity=2,
-                      name_patterns=["{W}{}"])
+                      name_patterns=["(w)()"])
 
 # Goblins like ugly doubles and have fewer syllables.
 # This language displays how to use sounds that take multiple letters in english.
@@ -199,7 +200,7 @@ goblin = Language("ouaei",
                   word_length=1,
                   clean_doubles=False,
                   phoneme_count=30,
-                  name_patterns=["{U}"])
+                  name_patterns=["(U)"])
 
 orcish = Language(u"aoâue",
                   ["k", "r", "j", "ch", "m",
@@ -207,5 +208,5 @@ orcish = Language(u"aoâue",
                   "(C)(V?)(V?)(C)",
                   word_length=1.2,
                   phoneme_count=40,
-                  name_patterns=["{U}{}", "{U}{} of Clan {U}{w}", "{U}{}, slayer of {U}{}", "{U}",
-                                 "{U}-{}", "{U}-{} of Clan {U}{w}", "{U}-{}, slayer of {U}{}"])
+                  name_patterns=["(U)()", "(U)() of Clan (U)(w)", "(U)(), slayer of (U)()", "(U)",
+                                 "(U)-()", "(U)-() of Clan (U)(w)", "(U)-(), slayer of (U)()"])
