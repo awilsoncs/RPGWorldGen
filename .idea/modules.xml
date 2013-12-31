@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/RPGWorldGen.iml" filepath="$PROJECT_DIR$/.idea/RPGWorldGen.iml" />
+      <module fileurl="file://$USER_HOME$/PycharmProjects/StringGenerator/.idea/StringGenerator.iml" filepath="$USER_HOME$/PycharmProjects/StringGenerator/.idea/StringGenerator.iml" />
     </modules>
   </component>
 </project>

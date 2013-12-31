@@ -1,4 +1,5 @@
 __author__ = 'Aaron'
+import xml.etree.ElementTree as et
 import random
 import re
 
@@ -30,3 +31,13 @@ class Generator:
 
     def output(self):
         print self.string
+
+
+def generator_from_xml(xml_file):
+    f = et.parse(xml_file)
+    root = f.getroot()
+    format_string = root.find('format').text
+    keys = {}
+    for key in root.findall('key'):
+        keys[key.attrib['name']] = [value.text for value in key.findall('value')]
+    return Generator(format_string, keys)
